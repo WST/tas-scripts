@@ -1,4 +1,4 @@
 tas-scripts
 ===========
 
-Gens Lua scripts for tool-assisted speedrunning
+These are just for fun. Their purpose and how to use them is described [[here|http://ystc.ru/viewtopic.php?id=43]].
