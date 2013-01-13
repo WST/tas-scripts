@@ -1,4 +1,4 @@
--- A simple Sonic 3 and Knuckles HUD
+-- A simple HUD for "Sonic 3 & Knuckles" and for "Sonic the Hedgehog 2"
 -- Gens Lua script by the members of Youtube Sonic TAS community <http://ystc.ru>
 -- Includes code by Felipe @ TASvideos
 
