@@ -251,7 +251,7 @@ if memory.readwordsigned(0xffb018)>0 then
 
 
 
-if memory.readwordsigned(0xffb010)<257 then
+if memory.readwordsigned(0xffb010)==0 then
 	message = string.format("velocity: %d, %d", xvel, yvel)
 	gui.text(10, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", xvel, yvel)
@@ -271,7 +271,7 @@ else
 
 
 
-if memory.readwordsigned(0xffb010)>-257 then
+if memory.readwordsigned(0xffb010)==0 then
 	message = string.format("velocity: %d, %d", xvel, yvel)
 	gui.text(10, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", xvel, yvel)
@@ -293,7 +293,7 @@ if memory.readwordsigned(0xffb050)>0 then
 
 
 
-if memory.readwordsigned(0xffb050)<257 then
+if memory.readwordsigned(0xffb050)==0  then
 	message = string.format("velocity: %d, %d", txvel, tyvel)
 	gui.text(220, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", txvel, tyvel)
@@ -312,7 +312,7 @@ else
 
 
 
-if memory.readwordsigned(0xffb050)>-257 then
+if memory.readwordsigned(0xffb050)==0 then
 	message = string.format("velocity: %d, %d", txvel, tyvel)
 	gui.text(220, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", txvel, tyvel)
