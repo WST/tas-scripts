@@ -1,7 +1,7 @@
--- A simple HUD for "Sonic 3 & Knuckles" and for "Sonic the Hedgehog 2"
+-- A simple Sonic HUD for classic Sonic games and their hacks (Sonic, Tails, Knuckles, Amy)
+-- Except "Amy in Sonic 1" and "Knuckles in Sonic 1/Sonic 2"
 -- Gens Lua script by the members of Youtube Sonic TAS community <http://ystc.ru>
--- Includes code by Felipe @ TASvideos
-
+-- Include codes from Felipe @tasvideo.org
 
 -- create space in memory for a savestate
 state = savestate.create()
@@ -62,16 +62,18 @@ end
 
 end
 
---now, players'speed and position
+--******************************************************************************************************--
 
---******************************************************************************************--
+--players' speed and position
 
 --checking the rom
 
-if memory.readbyte(0x000013f) == 32 then
+	rom = memory.readbyte(0x000013f)
 
---if rom is Sonic 3 & Knuckles
+if rom == 32 or rom == 116 or rom == 105 or rom == 51 then
 
+--If rom is Sonic 3 & Knuckles /Amy in Sonic 3 /Sonic 3 & Knuckles Master edition 2 /Sonic 3 & Knuckles Master edition
+--Or rom is Sonic 3
 
 	-- get the X and Y velocity of the player
 	xvel = memory.readwordsigned(0xffb018) -- sonic the hedgehog 3
@@ -192,7 +194,7 @@ end
 	message = string.format("speed:    %d", memory.readwordsigned(0xffb066))
 	gui.text(220, 100, message, "#FF8000FF", "black")
 
--- compare Tails position to Sonic's
+-- compare Tails' position to Sonic's
 
    xposvisual1 = p1x - camX 
    yposvisual1 = p1y - camY 
@@ -210,11 +212,14 @@ end
    message = string.format("%d px.", distance) 
    gui.text(xposvisual1 - 10, yposvisual1 - 25, message, "white", "black") 
 
-elseif memory.readbyte(0x000013f) == 50 then
---if rom is Sonic 2
+--******************************************************************************************************--
 
-	--get the X and Y velocity of the player
-	xvel = memory.readbyte(0xffb010) -- sonic the hedgehog 2
+elseif rom == 50 or rom == 86 then
+-- if rom is Sonic 2 /Sonic 2 Master edition 3 /Amy in Sonic 2
+
+
+	-- get the X and Y velocity of the player
+	xvel = memory.readwordsigned(0xffb010) -- sonic the hedgehog 2
 	bxvel = memory.readbytesigned(0xffb010)
 	yvel = memory.readwordsigned(0xffb012)
 	byvel = memory.readbytesigned(0xffb012)
@@ -251,7 +256,7 @@ if memory.readwordsigned(0xffb018)>0 then
 
 
 
-if memory.readwordsigned(0xffb010)==0 then
+if memory.readwordsigned(0xffb010)<257 then
 	message = string.format("velocity: %d, %d", xvel, yvel)
 	gui.text(10, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", xvel, yvel)
@@ -271,7 +276,7 @@ else
 
 
 
-if memory.readwordsigned(0xffb010)==0 then
+if memory.readwordsigned(0xffb010)>-257 then
 	message = string.format("velocity: %d, %d", xvel, yvel)
 	gui.text(10, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", xvel, yvel)
@@ -293,7 +298,7 @@ if memory.readwordsigned(0xffb050)>0 then
 
 
 
-if memory.readwordsigned(0xffb050)==0  then
+if memory.readwordsigned(0xffb050)<257 then
 	message = string.format("velocity: %d, %d", txvel, tyvel)
 	gui.text(220, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", txvel, tyvel)
@@ -312,7 +317,7 @@ else
 
 
 
-if memory.readwordsigned(0xffb050)==0 then
+if memory.readwordsigned(0xffb050)>-257 then
 	message = string.format("velocity: %d, %d", txvel, tyvel)
 	gui.text(220, 80, message, "#32CD32FF", "black")
 else 	message = string.format("velocity: %d, %d", txvel, tyvel)
@@ -350,9 +355,76 @@ end
    message = string.format("%d px.", distance) 
 
    gui.text(xposvisual1 - 10, yposvisual1 - 25, message, "white", "black") 
+--*******************************************************************************************************--
+
+elseif rom == 71 then
+
+--If rom is Sonic 1
+
+	-- get the X and Y velocity of the player
+	xvel = memory.readwordsigned(0xffd010) -- sonic the hedgehog
+	bxvel = memory.readbytesigned(0xffd010)
+	yvel = memory.readwordsigned(0xffd012)
+	byvel = memory.readbytesigned(0xffd012)
+
+
+	-- get the position of the character
+   p1x = memory.readwordunsigned(0xffd008) -- x position of sonic 
+   p1y = memory.readwordunsigned(0xffd00c) -- y position of sonic
+
+	message = string.format("sonic: %d, %d", p1x, p1y)
+	gui.text(10, 51, message, "#FFFF00FF", "black")
+
+
+if memory.readwordsigned(0xffd010)>0 then
+
+
+
+
+
+if memory.readbytesigned(0xffd010)<6 then
+	message = string.format("velocity: %d, %d", xvel, yvel)
+	gui.text(10, 80, message, "#F0000FF", "black")
+	message = string.format("velocity: %d, %d", bxvel, byvel)
+	gui.text(10, 90, message, "#FF0000FF", "black")
+elseif memory.readbytesigned(0xffd010)>14 then
+	message = string.format("velocity: %d, %d", xvel, yvel)
+	gui.text(10, 80, message, "#FFFFFFFF", "black")
+	message = string.format("velocity: %d, %d", bxvel, byvel)
+	gui.text(10, 90, message, "#FFFFFFFF", "black")
+else    message = string.format("velocity: %d, %d", bxvel, byvel)
+	gui.text(10, 90, message, "#32CD32FF", "black")
+	message = string.format("velocity: %d, %d", xvel, yvel)
+	gui.text(10, 80, message, "#32CD32FF", "black") end
+
 else
 
-print("rom not supported")
+
+
+
+if memory.readbytesigned(0xffd010)>-6 then
+	message = string.format("velocity: %d, %d", bxvel, byvel)
+	gui.text(10, 90, message, "#FF0000FF", "black")
+	message = string.format("velocity: %d, %d", xvel, yvel)
+	gui.text(10, 80, message, "#FF0000FF", "black")
+elseif memory.readbytesigned(0xffd010)<-14 then
+	message = string.format("velocity: %d, %d", bxvel, byvel)
+	gui.text(10, 90, message, "#FFFFFFFF", "black")
+	message = string.format("velocity: %d, %d", xvel, yvel)
+	gui.text(10, 80, message, "#FFFFFFFF", "black")
+else    message = string.format("velocity: %d, %d", bxvel, byvel)
+	gui.text(10, 90, message, "#32CD32FF", "black")
+	message = string.format("velocity: %d, %d", xvel, yvel)
+	gui.text(10, 80, message, "#32CD32FF", "black") end
+
+end
+
+
+else
+
+--*******************************************************************************************************--
+
+print("rom is not supported", rom)
 
 --end of the HUD
 end
